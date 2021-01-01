@@ -1,5 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
+import { createStructuredSelector } from 'reselect';
+import { selectCartItems, selectCartItemsTotal } from '../../redux/cart/cart.selectors';
+
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
 import EmptyComponent from '../../components/empty/empty.component';
 
@@ -38,11 +42,9 @@ const CheckoutPage = ({ cartItems, total }) => {
   );
 }
 
-const mapStateToProps = state => ({
-  cartItems: state.cart.cartItems,
-  total: state.cart.cartItems.reduce((accumulator, current) => 
-    accumulator += current.price * current.quantity 
-  , 0)
+const mapStateToProps = createStructuredSelector({
+  cartItems: selectCartItems,
+  total: selectCartItemsTotal
 })
 
 export default connect(mapStateToProps)(CheckoutPage);

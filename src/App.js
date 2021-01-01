@@ -2,6 +2,10 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Switch, Route } from 'react-router-dom'
 import { fetchCollectionsStartAsync } from './redux/shop/shop.actions'
+import './App.styles.css';
+
+import { createStructuredSelector } from 'reselect';
+import { selectIsLoaded } from './redux/shop/shop.selectors';
 
 import Header from './components/header/header.component'
 import HomePage from './pages/homepage/homepage.component'
@@ -13,10 +17,10 @@ import SpinnerContainer from './components/spinner-container/spinner-container.c
 
 function App({ fetchCollections, isLoaded }) {
   useEffect(() => {
-
-    fetchCollections()
-
-  }, [fetchCollections])
+    if (!isLoaded) {
+      fetchCollections();
+    }
+  }, [fetchCollections, isLoaded])
 
   return (
     <div>
@@ -36,8 +40,8 @@ function App({ fetchCollections, isLoaded }) {
   );
 }
 
-const mapStateToProps = state => ({
-  isLoaded: state.shop.isLoaded
+const mapStateToProps = createStructuredSelector({
+  isLoaded: selectIsLoaded
 })
 
 const mapDispatchToProps = dispatch => ({
