@@ -6,7 +6,7 @@ import * as S from './spinner-container.styles';
 const SpinnerContainer = () => {
   return (
     <S.Container>
-      <SyncLoader color='#aaa' size='15' margin='10' />
+      <SyncLoader color='#aaa' size='15px' margin='10px' />
     </S.Container>
   );
 }

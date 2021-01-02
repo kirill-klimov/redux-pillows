@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
-import { Switch, Route } from 'react-router-dom'
-import { fetchCollectionsStartAsync } from './redux/shop/shop.actions'
+import React, { useEffect, lazy, Suspense } from 'react';
+import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
+import { fetchCollectionsStart } from './redux/shop/shop.actions';
 import './App.styles.css';
 
 import { createStructuredSelector } from 'reselect';
 import { selectIsLoaded } from './redux/shop/shop.selectors';
 
-import Header from './components/header/header.component'
-import HomePage from './pages/homepage/homepage.component'
-import ShopPage from './pages/shoppage/shoppage.component'
-import CheckoutPage from './pages/checkout/checkout-page.component';
-import AboutPage from './pages/about/about-page.component';
-
+import Header from './components/header/header.component';
 import SpinnerContainer from './components/spinner-container/spinner-container.component';
+import ErrorBoundary from './components/error-boundary/error-boudary.component';
+
+const HomePage = lazy(() => import('./pages/homepage/homepage.component'))
+const ShopPage = lazy(() => import('./pages/shoppage/shoppage.component'))
+const CheckoutPage = lazy(() => import('./pages/checkout/checkout-page.component'))
+const AboutPage = lazy(() => import('./pages/about/about-page.component'))
+
 
 function App({ fetchCollections, isLoaded }) {
   useEffect(() => {
@@ -28,10 +30,14 @@ function App({ fetchCollections, isLoaded }) {
       {
         isLoaded ?
         <Switch>
-          <Route exact path='/' component={HomePage} />
-          <Route path='/shop' component={ShopPage} />
-          <Route exact path='/checkout' component={CheckoutPage} />
-          <Route exact path='/about' component={AboutPage} />
+          <ErrorBoundary>
+            <Suspense fallback={<SpinnerContainer />}>
+              <Route exact path='/' component={HomePage} />
+              <Route path='/shop' component={ShopPage} />
+              <Route exact path='/checkout' component={CheckoutPage} />
+              <Route exact path='/about' component={AboutPage} />
+            </Suspense>
+          </ErrorBoundary>
         </Switch>
         :
         <SpinnerContainer />
@@ -45,7 +51,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchCollections: () => dispatch(fetchCollectionsStartAsync())
+  fetchCollections: () => dispatch(fetchCollectionsStart())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
