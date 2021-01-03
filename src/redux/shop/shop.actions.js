@@ -16,6 +16,7 @@ export const fetchCollectionsError = error => ({
   payload: error
 })
 
+// for redux-thunk
 export const fetchCollectionsStartAsync = () => {
   return dispatch => {
     const collectionsRef = firestore.collection('collections')

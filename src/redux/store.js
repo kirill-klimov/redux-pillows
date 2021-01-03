@@ -5,11 +5,15 @@ import { rootSaga } from './root-saga';
 import createSagaMiddleware from 'redux-saga';
 
 import logger from 'redux-logger'
-import thunk from 'redux-thunk'
+// import thunk from 'redux-thunk'
 
 const sagaMiddleware = createSagaMiddleware();
 
-const middleware = [logger, thunk, sagaMiddleware];
+const middleware = [sagaMiddleware];
+
+if (process.env.NODE_ENV === 'development') {
+  middleware.push(logger);
+}
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

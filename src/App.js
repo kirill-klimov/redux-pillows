@@ -19,10 +19,8 @@ const AboutPage = lazy(() => import('./pages/about/about-page.component'))
 
 function App({ fetchCollections, isLoaded }) {
   useEffect(() => {
-    if (!isLoaded) {
-      fetchCollections();
-    }
-  }, [fetchCollections, isLoaded])
+    fetchCollections();
+  }, [fetchCollections])
 
   return (
     <div>

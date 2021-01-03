@@ -6,6 +6,7 @@ import { selectCartItems, selectCartItemsTotal } from '../../redux/cart/cart.sel
 
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
 import EmptyComponent from '../../components/empty/empty.component';
+import Button from '../../components/button/button.component';
 
 import * as S from './checkout-page.styles';
 
@@ -33,6 +34,9 @@ const CheckoutPage = ({ cartItems, total }) => {
           <S.TotalContainer>
             <span>TOTAL: ${total}</span>
           </S.TotalContainer>
+          <S.ButtonContainer>
+            <Button>ORDER</Button>
+          </S.ButtonContainer>
         </div>
         :
         <EmptyComponent />

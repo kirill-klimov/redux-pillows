@@ -54,3 +54,14 @@ export const TotalContainer = styled.div`
     font-weight: 300;
   }
 `;
+
+export const ButtonContainer = styled.div`
+  text-align: right;
+
+  button {
+    padding-left: 40px;
+    padding-right: 40px;
+    font-size: 1rem;
+  }
+
+`;
